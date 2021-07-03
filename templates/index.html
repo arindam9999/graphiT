@@ -28,67 +28,7 @@
     >
       Plot, Explore & have fun!!
     </h1>
-    <div
-      class="graph-plot"
-      style="
-        height: 580px;
-        width: 1100px;
-        background-color: rgba(160, 243, 243, 0.5);
-        border: solid 2px black;
-      "
-    >
-      <svg
-        style="position: absolute; left: 100px; top: 100px"
-        width="800"
-        height="200"
-      >
-        <circle cx="10" cy="10" r="10" fill="#456" stroke="none" />
-        <circle cx="726" cy="180" r="10" fill="#456" stroke="none" />
-        <path d="M 726 180 C 276 87 270 10 0 0" fill="none" stroke="#456" />
-      </svg>
-    </div>
-    <div
-      style="
-        height: 580px;
-        width: 235px;
-        background-color: cornflowerblue;
-        border: solid 2px black;
-        transform: translate(1110px, -584px);
-        margin-bottom: -580px;
-      "
-    >
-      <div class="form" style="padding: 30px">
-        <form id="form" action="/" method="POST" enctype="multipart/form-dat">
-          <label
-            for="story"
-            style="color: white; font-weight: 500; font-size: 20px"
-            >Enter n, m and <br />
-            Adjacency List:</label
-          >
-          <br />
-          <textarea
-            id="story"
-            name="story"
-            rows="15"
-            cols="20"
-            style="font-size: 15px"
-            padding="none;"
-            placeholder="Please enter here.."
-          ></textarea>
-          <button type="submit" form="form" value="Submit">Submit</button>
-        </form>
-      </div>
-    </div>
-
-    <div
-      class="footer"
-      style="
-        width: 1345px;
-        height: 150px;
-        background-color: darkgreen;
-        border: solid 2px black;
-      "
-    ></div>
+    <div id="plot-and-form"></div>
   </body>
   <!-- Global variables are Adjacency List, n, m -->
   <script>
@@ -106,7 +46,9 @@
       let parsedValueArray = parseStringData(valueString);
       console.log(parsedValueArray);
 
-      if (parsedValueArray.length < 2) {
+      if (validate(parsedValueArray)) {
+        createAdjArray(parsedValueArray);
+      } else {
         error_string = "Error! Invalid Data";
         document.getElementById("story").value = error_string;
         return error_string;
@@ -149,4 +91,40 @@
       return parsedValueArray;
     }
   </script>
+  <script>
+    // Array Validator
+    function validate(parsedValueArray) {
+      if (parsedValueArray.length < 2) return false;
+      if (parsedValueArray.length != 2 + 2 * parsedValueArray[1]) return false;
+      n = parsedValueArray[0];
+      m = parsedValueArray[1];
+
+      for (let i = 2; i < parsedValueArray.length; i++) {
+        if (parsedValueArray[i] > n || parsedValueArray[i] < 1) return false;
+      }
+      return true;
+    }
+  </script>
+  <!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+  <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel" src="/static/plotter.js"></script>
 </html>
+
+<!-- <svg
+        style="position: absolute; left: 100px; top: 100px"
+        width="800"
+        height="200"
+      >
+        <circle cx="10" cy="10" r="10" fill="#456" stroke="none" />
+        <circle cx="726" cy="180" r="10" fill="#456" stroke="none" />
+        <path d="M 726 180 C 276 87 270 10 0 0" fill="none" stroke="#456" />
+      </svg> -->

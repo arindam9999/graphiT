@@ -2,3 +2,37 @@ body {
   margin: 0px;
   padding: 0px;
 }
+
+.graph-plot {
+  height: 580px;
+  width: 1100px;
+  background-color: rgba(160, 243, 243, 0.5);
+  border: solid 2px black;
+}
+
+.data-receiver {
+  height: 580px;
+  width: 235px;
+  background-color: cornflowerblue;
+  border: solid 2px black;
+  transform: translate(1110px, -584px);
+  margin-bottom: -580px;
+}
+
+.input-details-text {
+  color: white;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.footer {
+  width: 1345px;
+  height: 150px;
+  background-color: darkgreen;
+  border: solid 2px black;
+}
+
+#story {
+  font-size: 15px;
+  padding: none;
+}

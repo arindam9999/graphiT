@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>GraphiT</title>
+  </head>
+  <body>
+    <h1
+      style="
+        text-align: center;
+        color: red;
+        background-color: yellow;
+        padding: 10px;
+        font-size: 40px;
+        margin: 0px;
+        border: solid 2px black;
+        border-bottom: none;
+      "
+    >
+      Plot, Explore & have fun!!
+    </h1>
+    <div
+      class="graph-plot"
+      style="
+        height: 580px;
+        width: 1100px;
+        background-color: rgba(160, 243, 243, 0.5);
+        border: solid 2px black;
+      "
+    >
+      <svg
+        style="position: absolute; left: 100px; top: 100px"
+        width="800"
+        height="200"
+      >
+        <circle cx="10" cy="10" r="10" fill="#456" stroke="none" />
+        <circle cx="726" cy="180" r="10" fill="#456" stroke="none" />
+        <path d="M 726 180 C 276 87 270 10 0 0" fill="none" stroke="#456" />
+      </svg>
+    </div>
+    <div
+      style="
+        height: 580px;
+        width: 235px;
+        background-color: cornflowerblue;
+        border: solid 2px black;
+        transform: translate(1110px, -584px);
+        margin-bottom: -580px;
+      "
+    >
+      <div class="form" style="padding: 30px">
+        <form id="form" action="/" method="POST" enctype="multipart/form-dat">
+          <label
+            for="story"
+            style="color: white; font-weight: 500; font-size: 20px"
+            >Enter n, m and <br />
+            Adjacency List:</label
+          >
+          <br />
+          <textarea
+            id="story"
+            name="story"
+            rows="15"
+            cols="20"
+            style="font-size: 15px"
+            padding="none;"
+            placeholder="Please enter here.."
+          ></textarea>
+          <button type="submit" form="form" value="Submit">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="footer"
+      style="
+        width: 1345px;
+        height: 150px;
+        background-color: darkgreen;
+        border: solid 2px black;
+      "
+    ></div>
+  </body>
+  <!-- Global variables are Adjacency List, n, m -->
+  <script>
+    let adjList = Array(200);
+    let n;
+    let m;
+  </script>
+  <!-- Getting data from form -->
+  <script>
+    $("form").submit(function (event) {
+      event.preventDefault();
+      let unformattedValueStringObject = $(this).serializeArray();
+      let valueString = unformattedValueStringObject["0"].value;
+
+      let parsedValueArray = parseStringData(valueString);
+      console.log(parsedValueArray);
+
+      if (parsedValueArray.length < 2) {
+        error_string = "Error! Invalid Data";
+        document.getElementById("story").value = error_string;
+        return error_string;
+      }
+    });
+  </script>
+  <!-- String Parser -->
+  <script>
+    function parseStringData(valueString) {
+      let lengthUnformattedString = valueString.length;
+      let parsedValueArray = new Array();
+      let tmpString = "";
+      for (let i = 0; i < lengthUnformattedString; i++) {
+        if (
+          valueString[i] == "0" ||
+          valueString[i] == "1" ||
+          valueString[i] == "2" ||
+          valueString[i] == "3" ||
+          valueString[i] == "4" ||
+          valueString[i] == "5" ||
+          valueString[i] == "6" ||
+          valueString[i] == "7" ||
+          valueString[i] == "8" ||
+          valueString[i] == "9"
+        ) {
+          tmpString += valueString[i];
+        } else {
+          if (tmpString.length > 0) {
+            let x = +tmpString;
+            parsedValueArray.push(x);
+            tmpString = "";
+          }
+        }
+      }
+      if (tmpString.length > 0) {
+        let x = +tmpString;
+        parsedValueArray.push(x);
+        tmpString = "";
+      }
+      return parsedValueArray;
+    }
+  </script>
+</html>
